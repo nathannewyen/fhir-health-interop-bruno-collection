@@ -1,0 +1,19 @@
+meta {
+  name: Update Task
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8080/tasks/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Learn Go basics - UPDATED",
+    "description": "Study variables, functions, structs, and interfaces",
+    "completed": true
+  }
+}

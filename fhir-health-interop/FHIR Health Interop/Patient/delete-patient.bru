@@ -1,0 +1,31 @@
+meta {
+  name: Delete Patient
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{baseUrl}}/fhir/Patient/{{patientId}}
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/fhir+json
+}
+
+docs {
+  # Delete Patient
+
+  Deletes a patient by ID.
+
+  **Requirements:**
+  - Patient must exist (create one first)
+  - Uses the `patientId` environment variable
+
+  **Test Steps:**
+  1. Create a patient first (use Create Patient request)
+  2. Run this request to delete the patient
+  3. Expected response: 204 No Content
+  4. Verify deletion by trying to GET the patient (should return 404)
+}

@@ -1,0 +1,31 @@
+meta {
+  name: Delete Observation
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{baseUrl}}/fhir/Observation/{{observationId}}
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/fhir+json
+}
+
+docs {
+  # Delete Observation
+
+  Deletes an observation by ID.
+
+  **Requirements:**
+  - Observation must exist (create one first)
+  - Uses the `observationId` environment variable
+
+  **Test Steps:**
+  1. Create an observation first (use Create Observation request)
+  2. Run this request to delete the observation
+  3. Expected response: 204 No Content
+  4. Verify deletion by trying to GET the observation (should return 404)
+}

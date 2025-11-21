@@ -1,0 +1,47 @@
+meta {
+  name: Update Patient
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/fhir/Patient/{{patientId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/fhir+json
+  Accept: application/fhir+json
+}
+
+body:json {
+    {
+      "resourceType": "Patient",
+      "id": "{{patientId}}",
+      "active": true,
+      "name": [
+        {
+          "family": "UpdatedLastName",
+          "given": ["UpdatedFirstName"]
+        }
+      ],
+      "gender": "male",
+      "birthDate": "1990-01-15"
+    }
+}
+
+docs {
+  # Update Patient
+
+  Updates an existing patient by ID.
+
+  **Requirements:**
+  - Patient must exist (create one first)
+  - Uses the `patientId` environment variable
+
+  **Test Steps:**
+  1. Create a patient first (use Create Patient request)
+  2. Run this request to update the patient
+  3. Verify the patient name is updated
+}

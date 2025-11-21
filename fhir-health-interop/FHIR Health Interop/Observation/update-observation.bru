@@ -1,0 +1,100 @@
+meta {
+  name: Update Observation
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/fhir/Observation/{{observationId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/fhir+json
+  Accept: application/fhir+json
+}
+
+body:json {
+  {
+    "resourceType": "Observation",
+    "id": "{{observationId}}",
+    "status": "amended",
+    "category": [
+      {
+        "coding": [
+          {
+            "code": "vital-signs"
+          }
+        ]
+      }
+    ],
+    "code": {
+      "coding": [
+        {
+          "system": "http://loinc.org",
+          "code": "85354-9",
+          "display": "Blood pressure"
+        }
+      ]
+    },
+    "subject": {
+      "reference": "Patient/{{patientId}}"
+    },
+    "effectiveDateTime": "2024-01-15T10:30:00Z",
+    "component": [
+      {
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8480-6",
+              "display": "Systolic blood pressure"
+            }
+          ]
+        },
+        "valueQuantity": {
+          "value": 125,
+          "unit": "mmHg"
+        }
+      },
+      {
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8462-4",
+              "display": "Diastolic blood pressure"
+            }
+          ]
+        },
+        "valueQuantity": {
+          "value": 82,
+          "unit": "mmHg"
+        }
+      }
+    ]
+  }
+}
+
+docs {
+  # Update Observation
+
+  Updates an existing observation by ID.
+
+  **Requirements:**
+  - Observation must exist (create one first)
+  - Uses the `observationId` environment variable
+  - Patient must exist (uses `patientId`)
+
+  **Changes in this update:**
+  - Status changed to "amended"
+  - Systolic pressure updated to 125 mmHg
+  - Diastolic pressure updated to 82 mmHg
+
+  **Test Steps:**
+  1. Create a patient first (use Create Patient request)
+  2. Create an observation (use Create Observation request)
+  3. Run this request to update the observation
+  4. Verify the values are updated
+}

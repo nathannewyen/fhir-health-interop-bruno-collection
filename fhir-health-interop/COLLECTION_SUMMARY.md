@@ -4,8 +4,9 @@
 Complete Bruno API testing collection for FHIR R4 Patient and Observation resources with comprehensive search capabilities.
 
 ## Collection Statistics
-- **Total Requests**: 19
+- **Total Requests**: 23
 - **Resources**: 2 (Patient, Observation)
+- **CRUD Operations**: Complete (Create, Read, Update, Delete)
 - **Search Endpoints**: 11
 - **Environments**: 2 (local, production)
 
@@ -33,6 +34,8 @@ fhir-health-interop/
     │   ├── get-patient-by-id.bru       # GET /fhir/Patient/{id}
     │   ├── get-all-patients.bru        # GET /fhir/Patient (basic)
     │   ├── get-sample-patient.bru      # GET /fhir/Patient/sample
+    │   ├── update-patient.bru          # PUT /fhir/Patient/{id}
+    │   ├── delete-patient.bru          # DELETE /fhir/Patient/{id}
     │   │
     │   └── Search/
     │       ├── search-by-name.bru               # ?name=Smith
@@ -45,6 +48,8 @@ fhir-health-interop/
         ├── create-observation.bru       # POST /fhir/Observation
         ├── get-observation-by-id.bru    # GET /fhir/Observation/{id}
         ├── get-observations-by-patient.bru  # GET /fhir/Observation?patient=
+        ├── update-observation.bru       # PUT /fhir/Observation/{id}
+        ├── delete-observation.bru       # DELETE /fhir/Observation/{id}
         │
         └── Search/
             ├── search-by-patient.bru             # ?patient=123
@@ -95,13 +100,15 @@ fhir-health-interop/
 |------|--------|----------|-------------|
 | Health Check | GET | `/health` | API health status |
 
-### 2. Patient CRUD (4)
+### 2. Patient CRUD (6)
 | Name | Method | Endpoint | Description |
 |------|--------|----------|-------------|
 | Create Patient | POST | `/fhir/Patient` | Create new patient |
 | Get Patient by ID | GET | `/fhir/Patient/{id}` | Retrieve specific patient |
 | Get All Patients | GET | `/fhir/Patient` | Get all patients |
 | Get Sample Patient | GET | `/fhir/Patient/sample` | Demo endpoint |
+| Update Patient | PUT | `/fhir/Patient/{id}` | Update existing patient |
+| Delete Patient | DELETE | `/fhir/Patient/{id}` | Delete patient |
 
 ### 3. Patient Search (5)
 | Name | Query Parameters | Use Case |
@@ -112,12 +119,14 @@ fhir-health-interop/
 | Search Active Patients | `?active=true&_sort=-created_at` | Active status with sorting |
 | Search Combined Filters | `?active=true&gender=female&birthdate=ge1990-01-01` | Multi-filter example |
 
-### 4. Observation CRUD (3)
+### 4. Observation CRUD (5)
 | Name | Method | Endpoint | Description |
 |------|--------|----------|-------------|
 | Create Observation | POST | `/fhir/Observation` | Create new observation |
 | Get Observation by ID | GET | `/fhir/Observation/{id}` | Retrieve specific observation |
 | Get Observations by Patient | GET | `/fhir/Observation?patient=` | Get patient observations |
+| Update Observation | PUT | `/fhir/Observation/{id}` | Update existing observation |
+| Delete Observation | DELETE | `/fhir/Observation/{id}` | Delete observation |
 
 ### 5. Observation Search (6)
 | Name | Query Parameters | Use Case |

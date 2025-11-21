@@ -5,25 +5,25 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/fhir/Patient?name={{searchName}}&_count=10
+  url: {{baseUrl}}/fhir/Patient?name=Nathan&_count=10
   body: none
   auth: none
 }
 
 params:query {
-  name: {{searchName}}
+  name: Nathan
   _count: 10
 }
 
 docs {
   # Search Patients by Name
-
+  
   Searches for patients where the name (given or family) contains the search term.
-
+  
   ## Query Parameters:
   - `name`: Searches both given_name and family_name (partial match, case-insensitive)
   - `_count`: Maximum number of results (default: 10, max: 100)
-
+  
   ## Examples:
   - `?name=Smith`
   - `?name=John`
