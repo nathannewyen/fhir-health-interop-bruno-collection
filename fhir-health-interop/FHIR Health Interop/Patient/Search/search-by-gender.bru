@@ -1,0 +1,32 @@
+meta {
+  name: Search by Gender
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/fhir/Patient?gender=female&_count=20
+  body: none
+  auth: none
+}
+
+params:query {
+  gender: female
+  _count: 20
+}
+
+docs {
+  # Search Patients by Gender
+
+  Filters patients by gender.
+
+  ## Valid Gender Values:
+  - `male`
+  - `female`
+  - `other`
+  - `unknown`
+
+  ## Combining with other filters:
+  - `?gender=female&active=true`
+  - `?gender=male&birthdate=ge1990-01-01`
+}

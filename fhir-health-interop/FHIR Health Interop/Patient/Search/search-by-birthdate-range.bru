@@ -1,0 +1,38 @@
+meta {
+  name: Search by Birthdate Range
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/fhir/Patient?birthdate=ge1990-01-01&_count=25
+  body: none
+  auth: none
+}
+
+params:query {
+  birthdate: ge1990-01-01
+  _count: 25
+}
+
+docs {
+  # Search Patients by Birth Date Range
+
+  Filters patients by birth date with comparison operators.
+
+  ## FHIR Date Prefixes:
+  - `eq`: Equal to (exact match) - `?birthdate=eq1995-06-15`
+  - `ge`: Greater than or equal - `?birthdate=ge1990-01-01`
+  - `le`: Less than or equal - `?birthdate=le2000-12-31`
+  - `gt`: Greater than - `?birthdate=gt1990-01-01`
+  - `lt`: Less than - `?birthdate=lt2000-12-31`
+
+  ## Date Format:
+  - YYYY-MM-DD (e.g., 1995-06-15)
+  - ISO 8601 (e.g., 1995-06-15T00:00:00Z)
+
+  ## Examples:
+  - Born after 1990: `?birthdate=ge1990-01-01`
+  - Born before 2000: `?birthdate=le2000-12-31`
+  - Born on exact date: `?birthdate=1995-06-15`
+}

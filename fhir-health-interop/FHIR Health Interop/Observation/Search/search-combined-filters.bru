@@ -1,0 +1,79 @@
+meta {
+  name: Search with Combined Filters
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/fhir/Observation?patient={{patientId}}&code=8480-6&status=final&date=ge2024-01-01&category=vital-signs&_sort=-effective_date&_count=15&_offset=0
+  body: none
+  auth: none
+}
+
+params:query {
+  patient: {{patientId}}
+  code: 8480-6
+  status: final
+  date: ge2024-01-01
+  category: vital-signs
+  _sort: -effective_date
+  _count: 15
+  _offset: 0
+}
+
+docs {
+  # Search with Combined Filters
+
+  Demonstrates combining multiple search parameters for complex queries.
+
+  This example finds final systolic blood pressure readings (vital signs category)
+  for a specific patient from 2024 onwards, sorted by most recent first.
+
+  ## All Available Observation Search Parameters:
+  - `patient`: Filter by patient ID (required for most queries)
+  - `code`: Filter by LOINC code (exact match)
+  - `category`: Filter by observation category
+  - `status`: Filter by observation status
+  - `date`: Filter by effective date (supports ge, le, gt, lt, eq prefixes)
+  - `_sort`: Sort results (effective_date, code, status, created_at)
+  - `_count`: Page size (default: 10, max: 100)
+  - `_offset`: Pagination offset (default: 0)
+
+  ## Example Combinations:
+
+  ### 1. Recent vital signs for patient:
+  ```
+  ?patient=123&category=vital-signs&_count=10&_sort=-effective_date
+  ```
+
+  ### 2. Finalized blood pressure readings from last month:
+  ```
+  ?patient=123&code=85354-9&status=final&date=ge2024-10-01&date=le2024-10-31
+  ```
+
+  ### 3. All laboratory results sorted by date:
+  ```
+  ?patient=123&category=laboratory&_sort=effective_date&_count=50
+  ```
+
+  ### 4. Specific test results with pagination:
+  ```
+  ?patient=123&code=2093-3&status=final&_count=20&_offset=20
+  ```
+
+  ### 5. Temperature readings above normal (requires date filter):
+  ```
+  ?patient=123&code=8310-5&category=vital-signs&status=final
+  ```
+
+  ## Sorting Options:
+  - `_sort=effective_date`: Oldest first
+  - `_sort=-effective_date`: Newest first (most common)
+  - `_sort=code`: Sort by code alphabetically
+  - `_sort=created_at`: Sort by creation time
+
+  ## Pagination:
+  - First page: `_count=20&_offset=0`
+  - Second page: `_count=20&_offset=20`
+  - Third page: `_count=20&_offset=40`
+}

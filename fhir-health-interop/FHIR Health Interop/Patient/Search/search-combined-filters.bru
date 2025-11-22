@@ -1,0 +1,53 @@
+meta {
+  name: Search with Combined Filters
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/fhir/Patient?active=true&gender=female&birthdate=ge1990-01-01&_sort=birthdate&_count=15&_offset=0
+  body: none
+  auth: none
+}
+
+params:query {
+  active: true
+  gender: female
+  birthdate: ge1990-01-01
+  _sort: birthdate
+  _count: 15
+  _offset: 0
+}
+
+docs {
+  # Search with Combined Filters
+
+  Demonstrates combining multiple search parameters.
+
+  This example finds active female patients born on or after 1990-01-01,
+  sorted by birthdate, with pagination.
+
+  ## All Available Patient Search Parameters:
+  - `name`: Search both given and family name (partial match)
+  - `family`: Search family name only (partial match)
+  - `given`: Search given name only (partial match)
+  - `gender`: Filter by gender (male, female, other, unknown)
+  - `birthdate`: Filter by birth date (supports ge, le, gt, lt, eq prefixes)
+  - `active`: Filter by active status (true/false)
+  - `_sort`: Sort results (name, family_name, given_name, birthdate, gender, created_at)
+  - `_count`: Page size (default: 10, max: 100)
+  - `_offset`: Pagination offset (default: 0)
+
+  ## Example Combinations:
+  1. Active patients named Smith:
+     `?active=true&name=Smith`
+
+  2. Male patients born in 1990s:
+     `?gender=male&birthdate=ge1990-01-01&birthdate=le1999-12-31`
+
+  3. Recent inactive patients:
+     `?active=false&_sort=-created_at&_count=10`
+
+  4. Paginated results:
+     `?_count=20&_offset=20` (gets page 2)
+}

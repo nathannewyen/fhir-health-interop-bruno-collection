@@ -1,0 +1,36 @@
+meta {
+  name: Create Patient
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/fhir/Patient
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/fhir+json
+  Accept: application/fhir+json
+}
+
+body:json {
+    {
+      "resourceType": "Patient",
+      "name": [
+        {
+          "family": "",
+          "given": [""]
+        }
+      ],
+      "gender": "male",
+      "birthDate": "1990-01-15"
+    }
+}
+
+script:post-response {
+  if (res.status === 201) {
+    bru.setEnvVar("patientId", res.body.id);
+  }
+}

@@ -1,0 +1,41 @@
+meta {
+  name: Search Active Patients
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/fhir/Patient?active=true&_sort=-created_at&_count=25
+  body: none
+  auth: none
+}
+
+params:query {
+  active: true
+  _sort: -created_at
+  _count: 25
+}
+
+docs {
+  # Search Active Patients
+
+  Filters patients by active status, sorted by most recently created.
+
+  ## Query Parameters:
+  - `active=true`: Only active patients
+  - `active=false`: Only inactive patients
+  - `_sort=-created_at`: Sort by newest first (- prefix = descending)
+  - `_count=25`: Return up to 25 results
+
+  ## Sorting Options:
+  - `_sort=name` or `_sort=family_name`: Sort by family name (ascending)
+  - `_sort=-name`: Sort by family name (descending)
+  - `_sort=birthdate`: Sort by birth date (ascending)
+  - `_sort=-birthdate`: Sort by birth date (descending)
+  - `_sort=created_at`: Sort by creation date (ascending)
+  - `_sort=-created_at`: Sort by creation date (descending)
+
+  ## Combining Filters:
+  - `?active=true&gender=female&name=Smith`
+  - `?active=true&birthdate=ge1990-01-01&_sort=birthdate`
+}

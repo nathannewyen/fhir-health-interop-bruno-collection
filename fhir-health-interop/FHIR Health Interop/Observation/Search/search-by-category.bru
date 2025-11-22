@@ -1,0 +1,50 @@
+meta {
+  name: Search by Category
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/fhir/Observation?patient={{patientId}}&category=vital-signs&_count=20&_sort=-effective_date
+  body: none
+  auth: none
+}
+
+params:query {
+  patient: {{patientId}}
+  category: vital-signs
+  _count: 20
+  _sort: -effective_date
+}
+
+docs {
+  # Search Observations by Category
+
+  Filters observations by their clinical category.
+
+  ## FHIR Observation Categories:
+  - `vital-signs`: Vital signs (BP, heart rate, temperature, etc.)
+  - `laboratory`: Laboratory tests and results
+  - `imaging`: Imaging results
+  - `procedure`: Procedure observations
+  - `survey`: Survey/questionnaire responses
+  - `exam`: Physical examination findings
+  - `therapy`: Therapy observations
+  - `activity`: Activity observations
+  - `social-history`: Social history (smoking, alcohol, etc.)
+
+  ## Common Use Cases:
+  - All vital signs: `?category=vital-signs`
+  - Lab results only: `?category=laboratory`
+  - Physical exam findings: `?category=exam`
+
+  ## Combining Category with Other Filters:
+  - Recent vital signs for patient:
+    `?patient=123&category=vital-signs&_count=10&_sort=-effective_date`
+
+  - Final lab results from 2024:
+    `?patient=123&category=laboratory&status=final&date=ge2024-01-01`
+
+  - Specific vital sign type:
+    `?patient=123&category=vital-signs&code=8480-6` (systolic BP)
+}

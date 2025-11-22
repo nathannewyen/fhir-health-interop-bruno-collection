@@ -1,0 +1,40 @@
+meta {
+  name: Search by Patient
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/fhir/Observation?patient={{patientId}}&_count=20&_sort=-effective_date
+  body: none
+  auth: none
+}
+
+params:query {
+  patient: {{patientId}}
+  _count: 20
+  _sort: -effective_date
+}
+
+docs {
+  # Search Observations by Patient
+
+  Retrieves all observations for a specific patient, sorted by most recent first.
+
+  ## Query Parameters:
+  - `patient`: Patient ID (supports both "123" and "Patient/123" formats)
+  - `_sort=-effective_date`: Sort by observation date, newest first
+  - `_count`: Maximum results (default: 10, max: 100)
+
+  ## Patient ID Formats:
+  Both formats are accepted:
+  - `?patient=123`
+  - `?patient=Patient/123`
+
+  The API automatically handles the "Patient/" prefix.
+
+  ## Examples:
+  - Recent observations: `?patient=123&_count=5`
+  - Sorted oldest first: `?patient=123&_sort=effective_date`
+  - Paginated: `?patient=123&_count=10&_offset=10`
+}

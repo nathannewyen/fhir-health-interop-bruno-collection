@@ -1,0 +1,15 @@
+meta {
+  name: Get All Patients
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/fhir/Patient
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/fhir+json
+}

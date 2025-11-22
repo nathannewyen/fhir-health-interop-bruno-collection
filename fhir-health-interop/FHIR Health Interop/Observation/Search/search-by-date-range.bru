@@ -1,0 +1,50 @@
+meta {
+  name: Search by Date Range
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/fhir/Observation?patient={{patientId}}&date=ge2024-01-01&_count=30
+  body: none
+  auth: none
+}
+
+params:query {
+  patient: {{patientId}}
+  date: ge2024-01-01
+  _count: 30
+}
+
+docs {
+  # Search Observations by Date Range
+
+  Filters observations by effective date with comparison operators.
+
+  ## FHIR Date Prefixes:
+  - `ge`: Greater than or equal - `?date=ge2024-01-01`
+  - `le`: Less than or equal - `?date=le2024-12-31`
+  - `gt`: Greater than - `?date=gt2024-01-01`
+  - `lt`: Less than - `?date=lt2024-12-31`
+  - `eq`: Equal to (exact match) - `?date=eq2024-06-15`
+
+  ## Date Formats:
+  - YYYY-MM-DD: `2024-01-01`
+  - ISO 8601: `2024-01-01T14:30:00Z`
+
+  ## Examples:
+  - Observations from 2024 onwards:
+    `?patient=123&date=ge2024-01-01`
+
+  - Observations in specific month:
+    `?patient=123&date=ge2024-06-01&date=le2024-06-30`
+
+  - Recent 7 days (example):
+    `?patient=123&date=ge2024-11-15`
+
+  - Specific day:
+    `?patient=123&date=eq2024-06-15`
+
+  ## Combining with Status:
+  - `?patient=123&date=ge2024-01-01&status=final`
+}

@@ -1,0 +1,50 @@
+meta {
+  name: Search by Code
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/fhir/Observation?patient={{patientId}}&code=8480-6&_count=10&_sort=-effective_date
+  body: none
+  auth: none
+}
+
+params:query {
+  patient: {{patientId}}
+  code: 8480-6
+  _count: 10
+  _sort: -effective_date
+}
+
+docs {
+  # Search Observations by Code
+
+  Retrieves observations for a specific LOINC code (e.g., Systolic BP).
+
+  ## Common LOINC Codes:
+  ### Blood Pressure:
+  - `85354-9`: Blood Pressure Panel
+  - `8480-6`: Systolic Blood Pressure
+  - `8462-4`: Diastolic Blood Pressure
+
+  ### Vital Signs:
+  - `29463-7`: Body Weight
+  - `8302-2`: Body Height
+  - `39156-5`: Body Mass Index (BMI)
+  - `8310-5`: Body Temperature
+  - `8867-4`: Heart Rate / Pulse
+  - `9279-1`: Respiratory Rate
+  - `2708-6`: Oxygen Saturation (SpO2)
+
+  ### Laboratory:
+  - `2093-3`: Total Cholesterol
+  - `2571-8`: Triglycerides
+  - `2339-0`: Glucose
+  - `6299-2`: Urea Nitrogen (BUN)
+
+  ## Examples:
+  - All BP readings: `?patient=123&code=85354-9`
+  - Heart rate only: `?patient=123&code=8867-4`
+  - Temperature: `?code=8310-5&patient=123`
+}

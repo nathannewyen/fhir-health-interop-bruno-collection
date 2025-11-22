@@ -1,0 +1,45 @@
+meta {
+  name: Search by Status
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/fhir/Observation?patient={{patientId}}&status=final&_count=25
+  body: none
+  auth: none
+}
+
+params:query {
+  patient: {{patientId}}
+  status: final
+  _count: 25
+}
+
+docs {
+  # Search Observations by Status
+
+  Filters observations by their current status.
+
+  ## FHIR Observation Status Values:
+  - `registered`: Observation has been registered but not yet performed
+  - `preliminary`: Initial results available but not verified
+  - `final`: Final verified results (most common)
+  - `amended`: Final results have been modified
+  - `corrected`: Final results have been corrected
+  - `cancelled`: Observation was cancelled/aborted
+  - `entered-in-error`: Observation was entered in error
+  - `unknown`: Status is not known
+
+  ## Use Cases:
+  - Final results only: `?status=final`
+  - Preliminary results: `?status=preliminary`
+  - All except cancelled: Requires multiple requests
+
+  ## Combining with Other Filters:
+  - Final vital signs from 2024:
+    `?patient=123&status=final&category=vital-signs&date=ge2024-01-01`
+
+  - Final lab results for specific test:
+    `?patient=123&status=final&code=2093-3&category=laboratory`
+}

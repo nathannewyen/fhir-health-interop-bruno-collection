@@ -1,0 +1,15 @@
+meta {
+  name: Get Observation By ID
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/fhir/Observation/{{observationId}}
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/fhir+json
+}
