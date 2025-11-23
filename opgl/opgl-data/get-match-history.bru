@@ -1,0 +1,46 @@
+meta {
+  name: get-match-history
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/v1/matches/{{region}}/{{puuid}}
+  body: none
+  auth: none
+}
+
+params:query {
+  count: 20
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("should return 200 OK", function() {
+    expect(res.status).to.equal(200);
+  });
+
+  test("should return array of match IDs", function() {
+    expect(res.body).to.be.an('array');
+  });
+
+  test("should have match data", function() {
+    if (res.body.length > 0) {
+      expect(res.body[0]).to.be.a('string');
+    }
+  });
+}
+
+docs {
+  # Get Match History
+
+  Retrieves the match history for a summoner by their PUUID.
+
+  **Note:** You must run "get-summoner" first to populate the puuid variable.
+
+  ## Query Parameters
+  - `count` (optional): Number of matches to retrieve (default: 20)
+}

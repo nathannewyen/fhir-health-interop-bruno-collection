@@ -1,0 +1,41 @@
+meta {
+  name: get-summoner
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/v1/summoner/{{region}}/{{summonerName}}
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("should return 200 OK", function() {
+    expect(res.status).to.equal(200);
+  });
+
+  test("should return summoner data", function() {
+    expect(res.body).to.have.property('id');
+    expect(res.body).to.have.property('accountId');
+    expect(res.body).to.have.property('puuid');
+    expect(res.body).to.have.property('name');
+    expect(res.body).to.have.property('summonerLevel');
+  });
+
+  test("should have valid puuid", function() {
+    expect(res.body.puuid).to.be.a('string');
+    expect(res.body.puuid.length).to.be.greaterThan(0);
+  });
+}
+
+script:post-response {
+  // Store puuid for subsequent requests
+  if (res.body && res.body.puuid) {
+    bru.setVar("puuid", res.body.puuid);
+  }
+}

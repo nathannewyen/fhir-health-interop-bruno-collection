@@ -1,0 +1,101 @@
+meta {
+  name: analyze-player
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/v1/analyze/{{region}}/{{summonerName}}
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("should return 200 OK", function() {
+    expect(res.status).to.equal(200);
+  });
+
+  test("should return analysis data", function() {
+    expect(res.body).to.have.property('summoner');
+    expect(res.body).to.have.property('statistics');
+    expect(res.body).to.have.property('improvements');
+  });
+
+  test("should have summoner information", function() {
+    expect(res.body.summoner).to.have.property('name');
+    expect(res.body.summoner).to.have.property('summonerLevel');
+  });
+
+  test("should have performance statistics", function() {
+    const stats = res.body.statistics;
+    expect(stats).to.have.property('averageKDA');
+    expect(stats).to.have.property('averageCS');
+    expect(stats).to.have.property('averageVisionScore');
+    expect(stats).to.have.property('averageDamage');
+    expect(stats).to.have.property('winRate');
+  });
+
+  test("should have improvement recommendations", function() {
+    expect(res.body.improvements).to.be.an('array');
+    if (res.body.improvements.length > 0) {
+      const improvement = res.body.improvements[0];
+      expect(improvement).to.have.property('area');
+      expect(improvement).to.have.property('priority');
+      expect(improvement).to.have.property('recommendation');
+    }
+  });
+
+  test("statistics should have valid numeric values", function() {
+    const stats = res.body.statistics;
+    expect(stats.averageKDA).to.be.a('number');
+    expect(stats.averageCS).to.be.a('number');
+    expect(stats.averageVisionScore).to.be.a('number');
+    expect(stats.averageDamage).to.be.a('number');
+    expect(stats.winRate).to.be.a('number');
+    expect(stats.winRate).to.be.at.least(0);
+    expect(stats.winRate).to.be.at.most(100);
+  });
+}
+
+docs {
+  # Analyze Player Performance
+
+  Performs comprehensive analysis of a player's recent matches and provides:
+  - Performance statistics (KDA, CS, Vision Score, Damage, Win Rate)
+  - Identified improvement areas
+  - Prioritized recommendations
+
+  This endpoint combines summoner lookup, match history retrieval, and statistical analysis.
+
+  ## Response Structure
+  ```json
+  {
+    "summoner": {
+      "name": "string",
+      "summonerLevel": number,
+      "puuid": "string"
+    },
+    "statistics": {
+      "averageKDA": number,
+      "averageCS": number,
+      "averageVisionScore": number,
+      "averageDamage": number,
+      "winRate": number,
+      "gamesAnalyzed": number
+    },
+    "improvements": [
+      {
+        "area": "string",
+        "priority": "high|medium|low",
+        "currentValue": number,
+        "targetValue": number,
+        "recommendation": "string"
+      }
+    ]
+  }
+  ```
+}
