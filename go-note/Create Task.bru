@@ -1,13 +1,21 @@
 meta {
   name: Create Task
   type: http
-  seq: 1
+  seq: 3
 }
 
 post {
   url: http://localhost:8080/tasks
   body: json
-  auth: none
+  auth: bearer
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6Im5oYW5AdGVzdC5jb20iLCJleHAiOjE3NjM5NDcwMzksImlhdCI6MTc2Mzg2MDYzOX0.8m72W_6IDoBql-UF3v_X9FyBBw-DmvjUry_fhmrYj_I
+}
+
+auth:bearer {
+  token: YOUR_TOKEN_HERE
 }
 
 body:json {

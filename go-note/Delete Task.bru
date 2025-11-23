@@ -1,11 +1,19 @@
 meta {
   name: Delete Task
   type: http
-  seq: 5
+  seq: 7
 }
 
 delete {
   url: http://localhost:8080/tasks/1
   body: none
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: YOUR_TOKEN_HERE
+}
+
+headers {
+  Authorization: Bearer YOUR_TOKEN_HERE
 }
